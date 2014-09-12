@@ -45,7 +45,7 @@
 	<div class="easyui-panel" title="${jspGridTitle}" style="width:900px;padding:0px;"></div>
 	
 <!-- =========显示数据表格列表======== -->
-	<table id="datagrid"></table>
+	<table id="dategrid"></table>
 	
 <!-- =========显示弹窗======== -->
 	<div id="dialog"></div>
@@ -57,12 +57,11 @@
 			{text : '添加', iconCls : 'icon-add', handler : addUser},//添加用户
 			{text : '删除', iconCls : 'icon-cancel', handler : deleteUser},//删除用户，支持批量删除
 			{text : '修改', iconCls : 'icon-edit', handler : editUser},//修改用户，只能单个修改
-			{text : '初始化密码', iconCls : 'icon-remove', handler : initUserPasswd},//初始化用户密码，支持批量操作
-			{text : '导出Excel', iconCls : 'icon-redo', handler : exportUser}//修改用户，只能单个修改
+			{text : '初始化密码', iconCls : 'icon-remove', handler : initUserPasswd}//初始化用户密码，支持批量操作
 		];
 
 		//加载datagrid数据表格
-		$('#datagrid').datagrid({
+		$('#dategrid').datagrid({
 			url : 'user_list.action',
 			columns : [ [ 
 				{field : 'ck', checkbox: true},//定义多选框 checkbox
@@ -107,7 +106,7 @@
 	//表格的查询
 	function doSearch() {
 		//根据查询条件，重新加载表格
-		$('#datagrid').datagrid('load', {
+		$('#dategrid').datagrid('load', {
 			id : $('#userid').val(),
 			loginName : $('#loginName').val(),
 			email: $('#email').val(),
@@ -148,7 +147,7 @@
 	
 	//删除用户，支持批量删除
 	function deleteUser(){
-		var $checkedRows = $('#datagrid').datagrid('getChecked');
+		var $checkedRows = $('#dategrid').datagrid('getChecked');
 		
 		//如果没有选中要删除的行，提示错误并返回
 		if($checkedRows.length == 0){
@@ -186,7 +185,7 @@
 	
 	//修改用户，一次只能修改一个用户
 	function editUser(){
-		var $checkedRows = $('#datagrid').datagrid('getChecked');
+		var $checkedRows = $('#dategrid').datagrid('getChecked');
 		
 		//如果没有选中要修改的行，提示错误并返回
 		if($checkedRows.length == 0){
@@ -210,7 +209,7 @@
 	
 	//初始化用户密码，支持批量操作
 	function initUserPasswd(){
-		var $checkedRows = $('#datagrid').datagrid('getChecked');
+		var $checkedRows = $('#dategrid').datagrid('getChecked');
 		
 		//如果没有选中的行，提示错误并返回
 		if($checkedRows.length == 0){
@@ -226,7 +225,7 @@
 	    				initPasswdIds[key] = val.id;
 	    			});
 	        		var postData = {'initPasswdIds': initPasswdIds};
-	        		//ajax 请求初始化选中的行的密码
+	        		//ajax 请求删除选中的行
 	    			$.ajax({
 	    				url: 'user_initPasswd.action',
 	    				type: 'POST',
@@ -244,16 +243,6 @@
 	   		});//end of confirm
 		}//end of else
 	}//end of deleteUser
-	
-	//导出Excel
-	function exportUser(){
-		//ajax 请求导出Excel
-		console.log("11111111");
-		$.ajax({
-			url: 'user_export.action',
-			type: 'POST'
-		});//end of $.ajax
-	}
 	
 </script>
 
